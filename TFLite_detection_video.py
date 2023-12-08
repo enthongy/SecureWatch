@@ -8,6 +8,7 @@ import importlib.util
 import sqlite3
 from datetime import datetime
 
+
 # Define and parse input arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
@@ -23,9 +24,6 @@ parser.add_argument('--video', help='Name of the video file',
 parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed up detection',
                     action='store_true')
 
-
-
-
 args = parser.parse_args()
 
 
@@ -37,8 +35,6 @@ LABELMAP_NAME = args.labels
 VIDEO_NAME = args.video
 min_conf_threshold = float(args.threshold)
 use_TPU = args.edgetpu
-
-
 
 
 # Import TensorFlow libraries
@@ -74,39 +70,23 @@ if use_TPU:
 parser.add_argument('--database', help='detection_database', default='detection_database.db')
 args = parser.parse_args()
 
-
-
-
 # Get path to current working directory
 CWD_PATH = os.getcwd()
-
-
 
 
 # Path to video file
 VIDEO_PATH = os.path.join(CWD_PATH,VIDEO_NAME)
 
-
-
-
 # Path to .tflite file, which contains the model that is used for object detection
 PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME)
-
-
 
 
 # Path to label map file
 PATH_TO_LABELS = os.path.join(CWD_PATH,MODEL_NAME,LABELMAP_NAME)
 
-
-
-
 # Load the label map
 with open(PATH_TO_LABELS, 'r') as f:
     labels = [line.strip() for line in f.readlines()]
-
-
-
 
 # Have to do a weird fix for label map if using the COCO "starter model" from
 # https://www.tensorflow.org/lite/models/object_detection/overview
